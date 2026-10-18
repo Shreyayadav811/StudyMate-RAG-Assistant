@@ -33,21 +33,6 @@ streamlit run app.py
 
 Create a Gemini API key in Google AI Studio at https://aistudio.google.com/apikey. The Gemini API has a free tier for selected models, but availability and rate limits depend on your account, region, and current policy; do not enable billing if you need a hard zero-cost setup. Never commit `.env` or paste the key into source code. Model availability and free quotas can change. Check the official pricing page before deploying: https://ai.google.dev/gemini-api/docs/pricing. Set `GEMINI_MODEL` to a model currently available to your account if needed.
 
-## Deploy to Streamlit Community Cloud
-
-1. Create a new GitHub repository and push the contents of this folder to its root.
-2. Open Streamlit Community Cloud and create an app from that repository; choose `app.py` as the main file.
-3. In the app's **Settings → Secrets**, add:
-
-```toml
-GEMINI_API_KEY = "your_real_key_here"
-GEMINI_MODEL = "gemini-3.8-flash"
-```
-
-4. Deploy. The first start can take longer while the embedding and reranker models download.
-5. Open the public app URL, upload your PDF, click **Index PDFs**, then ask a question.
-
-Do not add secrets to GitHub. The app uses ephemeral, session-scoped ChromaDB collections; users should re-upload and re-index documents after a session reset or app restart. This is deliberate for a demo and avoids retaining private PDFs on shared disk.
 
 ## Retrieval flow
 
