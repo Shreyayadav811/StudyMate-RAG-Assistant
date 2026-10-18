@@ -61,9 +61,9 @@ Grounded LLM answer + source/page references
 
 ## Evaluation checklist
 
-- [ ] Ask a direct fact question answered in the PDF.
-- [ ] Ask a multi-part question and verify each claim against cited pages.
-- [ ] Ask a question absent from the PDF; the assistant should say the documents do not provide enough information.
-- [ ] Upload two PDFs and confirm source filenames/pages remain distinct.
-- [ ] Test with reranking enabled and disabled; compare whether top sources are more relevant.
-- [ ] Confirm API key is stored only in cloud Secrets / local `.env`.
+- [✅] Ask a direct fact question answered in the PDF.
+- [✅] Ask a multi-part question and verify each claim against cited pages.
+- [✅] Ask a question absent from the PDF; the assistant should say the documents do not provide enough information.
+- [✅] Upload two PDFs and confirm source filenames/pages remain distinct.
+- [✅] Test with reranking enabled and disabled; compare whether top sources are more relevant.
+- [✅] Confirm API key is stored only in cloud Secrets / local `.env`.
