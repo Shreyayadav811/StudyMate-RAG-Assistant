@@ -9,35 +9,40 @@ from services.reranker import rerank
 from services.retriever import retrieve
 
 
+
 def _build_search_queries(question: str) -> list[str]:
-    """Create focused search queries for common multi-topic study questions."""
+    """Build focused search queries without adding unrelated topics."""
+    q = question.lower().strip()
     queries = [question]
-    q = question.lower()
 
-    if any(term in q for term in [
-        "5 vs", "five vs", "five v", "characteristics of big data",
-        "volume, velocity", "volume and velocity",
-    ]):
-        queries.append("What are the 5 Vs of Big Data? Explain Volume, Velocity, Variety, Veracity, and Value with examples.")
+    # A 5-Vs question should retrieve only Big Data characteristics.
+    is_five_vs_question = any(term in q for term in [
+        "5 vs",
+        "five vs",
+        "five v",
+        "characteristics of big data",
+        "volume, velocity",
+        "volume and velocity",
+    ])
 
-    if any(term in q for term in [
-        "hadoop", "hdfs", "yarn", "mapreduce",
-    ]):
+    if is_five_vs_question:
         queries.append(
-            "Hadoop components: HDFS distributed storage, NameNode, DataNodes, "
-            "YARN cluster resource management, and MapReduce parallel processing."
+            "The five Vs of Big Data: Volume, Velocity, Variety, "
+            "Veracity, and Value, including their definitions and examples."
+        )
+        return list(dict.fromkeys(queries))
+
+    # Expand only when the user explicitly asks about Hadoop concepts.
+    if any(term in q for term in ["hadoop", "hdfs", "yarn", "mapreduce"]):
+        queries.append(
+            "Hadoop components relevant to the question, including HDFS, "
+            "YARN, and MapReduce where applicable."
         )
 
-    if any(term in q for term in [
-        "volume", "velocity", "big data",
-    ]):
-        queries.append(
-            "Big Data Volume and Velocity challenges, and how distributed storage "
-            "and parallel processing help handle large and fast-arriving data."
-        )
-
-    # Remove duplicate queries while preserving their order.
+    # Do not automatically expand every Big Data question into
+    # distributed storage and parallel processing topics.
     return list(dict.fromkeys(queries))
+
 
 
 def answer_question(
